@@ -46,7 +46,7 @@ namespace CarRent.Migrations
                     b.ToTable("customer");
                 });
 
-            modelBuilder.Entity("CarRent.CustomerManagement.Domain.Models.ZipCodePlace", b =>
+            modelBuilder.Entity("CarRent.CustomerManagement.Domain.ZipCodePlace", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,12 +67,13 @@ namespace CarRent.Migrations
 
             modelBuilder.Entity("CarRent.CustomerManagement.Domain.Customer", b =>
                 {
-                    b.HasOne("CarRent.CustomerManagement.Domain.Models.ZipCodePlace", null)
+                    b.HasOne("CarRent.CustomerManagement.Domain.ZipCodePlace", "ZipCodePlace")
                         .WithMany()
                         .HasForeignKey("ZipCodePlaceId")
-                        .HasConstraintName("FK_Customer_ZipCodePlace")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ZipCodePlace");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRent.Migrations
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20210118114340_DBInit")]
-    partial class DBInit
+    [Migration("20210118204647_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,7 @@ namespace CarRent.Migrations
                     b.ToTable("customer");
                 });
 
-            modelBuilder.Entity("CarRent.CustomerManagement.Domain.Models.ZipCodePlace", b =>
+            modelBuilder.Entity("CarRent.CustomerManagement.Domain.ZipCodePlace", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,12 +69,13 @@ namespace CarRent.Migrations
 
             modelBuilder.Entity("CarRent.CustomerManagement.Domain.Customer", b =>
                 {
-                    b.HasOne("CarRent.CustomerManagement.Domain.Models.ZipCodePlace", null)
+                    b.HasOne("CarRent.CustomerManagement.Domain.ZipCodePlace", "ZipCodePlace")
                         .WithMany()
                         .HasForeignKey("ZipCodePlaceId")
-                        .HasConstraintName("FK_Customer_ZipCodePlace")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ZipCodePlace");
                 });
 #pragma warning restore 612, 618
         }

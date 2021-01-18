@@ -1,7 +1,9 @@
 ﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
+using System.Security.Cryptography.X509Certificates;
 using CarRent.CustomerManagement.DbContext;
 using CarRent.CustomerManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRent.CustomerManagement.Api
 {
@@ -16,13 +18,11 @@ namespace CarRent.CustomerManagement.Api
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
-        private readonly CustomerDbContext db;
 
-        public CustomerController(ICustomerService customerService, CustomerDbContext db)
+        private readonly CustomerDbContext _dbContext;
+        public CustomerController(CustomerDbContext db)
         {
-            _customerService = customerService;
-            this.db = db;
+            this._dbContext = db;
         }
 
         // GET: api/<CustomerController>
@@ -30,24 +30,43 @@ namespace CarRent.CustomerManagement.Api
         public List<CustomerDTO> Get()
         {
 
-            var customers = from c in db.Customers
-                            select new CustomerDTO()
-                            {
-                                Id = c.Id,
-                                Name = c.Name,
-                                Surname = c.Surname,
-                                Street = c.Street,
-                                ZipCodePlaceId = c.ZipCodePlaceId
-                            };
-            return customers.ToList();
+            var list = new List<CustomerDTO>();
+            //var customers = _dbContext.Customers.Include(x => x.).ToList();
+            //foreach (var c in customers)
+            //{
+            //    var customer = new CustomerDTO();
+            //    customer.Id = c.Id;
+            //    customer.Name = c.Name;
+            //    customer.Surname = c.Surname;
+            //    customer.Street = c.Street;
+            //    var zipCodePlace = new ZipCodePlaceDTO();
+            //    zipCodePlace.Id = c.ZipCodePlace.Id;
+            //    zipCodePlace.Place = c.ZipCodePlace.Place;
+            //    zipCodePlace.ZipCode =  c.ZipCodePlace.ZipCode;
+
+
+            //    list.Add(customer);
+            //}
+            return list;
         }
 
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public CustomerDTO Get(int id)
+        public CustomerDTO Get(Guid id)
         {
-            return new CustomerDTO();
+            var c = _dbContext.Customers.Include(x => x.ZipCodePlace).FirstOrDefault();
+            var customer = new CustomerDTO();
+            customer.Id = c.Id;
+            customer.Name = c.Name;
+            customer.Surname = c.Surname;
+            customer.Street = c.Street;
+            var zipCodePlace = new ZipCodePlaceDTO();
+            zipCodePlace.Id = c.ZipCodePlace.Id;
+            zipCodePlace.Place = c.ZipCodePlace.Place;
+            zipCodePlace.ZipCode = c.ZipCodePlace.ZipCode;
+            customer.ZipCodePlaceDto = zipCodePlace;
+            return customer;
         }
 
         // POST api/<CustomerController>
@@ -61,8 +80,8 @@ namespace CarRent.CustomerManagement.Api
             c.Street = customer.Street;
             c.ZipCodePlaceId = customer.ZipCodePlaceId;
 
-            db.Customers.Add(c);
-            db.SaveChanges();
+            _dbContext.Customers.Add(c);
+            _dbContext.SaveChanges();
         }
 
         // PUT api/<CustomerController>/5

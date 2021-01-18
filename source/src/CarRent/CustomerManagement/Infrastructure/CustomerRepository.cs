@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
 using System.Runtime.ConstrainedExecution;
+using CarRent.CustomerManagement.Application;
+using CarRent.CustomerManagement.DbContext;
 
 namespace CarRent.CustomerManagement.Infrastructure
 {
@@ -11,6 +13,11 @@ namespace CarRent.CustomerManagement.Infrastructure
 
     public class CustomerRepository : ICustomerRepository
     {
+        public CustomerRepository()
+        {
+
+        }
+
         public Customer FindById(Guid id)
         {
             throw new NotImplementedException();
@@ -41,5 +48,9 @@ namespace CarRent.CustomerManagement.Infrastructure
             throw new NotImplementedException();
         }
 
+        public List<Customer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

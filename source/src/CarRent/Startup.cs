@@ -1,4 +1,6 @@
 
+using System;
+using AutoMapper;
 using CarRent.CustomerManagement.DbContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +34,6 @@ namespace CarRent
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarRent", Version = "v1" });
             });
-            
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
             

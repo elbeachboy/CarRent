@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRent.Migrations
 {
-    public partial class DBInit : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,10 +36,11 @@ namespace CarRent.Migrations
                 {
                     table.PrimaryKey("Pk_CustomerId", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customer_ZipCodePlace",
+                        name: "FK_customer_plz_ZipCodePlaceId",
                         column: x => x.ZipCodePlaceId,
                         principalTable: "plz",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

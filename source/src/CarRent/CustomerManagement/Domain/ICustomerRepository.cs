@@ -7,7 +7,7 @@
 
     public interface ICustomerRepository
     {
-
+        List<Customer> GetAll();
         Customer FindById(Guid id);
         IEnumerable<Customer> FindByName(string name);
         void Add(Customer customer);
