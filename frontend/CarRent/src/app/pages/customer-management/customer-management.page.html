@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>customerManagement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="livesearch($event)"></ion-searchbar>
+
+  <ion-list>  
+    <ion-item button *ngFor="let item of (results | async)" [routerLink]="['/', 'customerManagement', item.id]">  
+      <ion-label text-wrap>  
+        <h3>{{ item.name }}</h3>  
+        <h3>{{ item.surname }}</h3>
+        <h3>{{ item.street }}</h3>  
+      </ion-label> 
+    </ion-item>  
+   
+  </ion-list>  
+
+</ion-content>

@@ -38,6 +38,13 @@ namespace CarRent
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddCors(o => o.AddPolicy("charppolicy", builder =>  
+            {  
+                builder.AllowAnyOrigin()  
+                    .AllowAnyMethod()  
+                    .AllowAnyHeader();  
+            }));  
+  
 
         }
 
@@ -50,6 +57,8 @@ namespace CarRent
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarRent v1"));
             }
+
+            app.UseCors("charppolicy");  
 
             app.UseHttpsRedirection();
 
