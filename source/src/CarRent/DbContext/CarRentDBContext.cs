@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRent.CustomerManagement.DbContext
 {
-    public class CustomerDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class CarRentDBContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public CustomerDbContext(DbContextOptions options) : base(options)
+        public CarRentDBContext(DbContextOptions options) : base(options)
         {
         }
         public DbSet<Customer> Customers { get; set; }
@@ -31,8 +31,6 @@ namespace CarRent.CustomerManagement.DbContext
             modelBuilder.Entity<Customer>().Property(c => c.Surname).HasColumnType("nvarchar(100)").IsRequired();
             modelBuilder.Entity<Customer>().Property(c => c.Name).HasColumnType("nvarchar(100)").IsRequired();
             modelBuilder.Entity<Customer>().Property(c => c.ZipCodePlaceId).HasColumnType("int").IsRequired();;
-
-            //modelBuilder.Entity<Customer>().HasOne<ZipCodePlace>().WithMany().HasPrincipalKey(zcp => zcp.Id).HasForeignKey(c => c.ZipCodePlaceId).OnDelete(DeleteBehavior.NoAction).HasConstraintName("FK_Customer_ZipCodePlace");
 
         }
     }

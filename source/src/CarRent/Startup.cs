@@ -34,10 +34,11 @@ namespace CarRent
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarRent", Version = "v1" });
             });
+            services.AddDbContextPool<CarRentDBContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddTransient<ICustomerService, CustomerService>();
-            services.AddSingleton<ICustomerRepository, CustomerRepository>();
-            
-            services.AddDbContextPool<CustomerDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(mySqlConnectionStr)));
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddAutoMapper(typeof(Startup));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

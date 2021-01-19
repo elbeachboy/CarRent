@@ -1,4 +1,6 @@
-﻿namespace CarRent.CustomerManagement.Application
+﻿using CarRent.CustomerManagement.Domain;
+
+namespace CarRent.CustomerManagement.Application
 {
     using System;
     using System.Collections.Generic;
@@ -7,5 +9,16 @@
 
     public interface ICustomerService
     {
+        List<Customer> GetAllCustomers();
+
+        Customer GetCustomerById(Guid id);
+
+        List<Customer> GetCustomerByName(string name);
+
+        void AddCustomer(Customer customer);
+
+        void DeleteCustomer(Guid id);
+
+        void UpdateCustomer(Customer customer);
     }
 }

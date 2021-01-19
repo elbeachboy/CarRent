@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRent.Migrations
 {
-    [DbContext(typeof(CustomerDbContext))]
+    [DbContext(typeof(CustomerManagement.DbContext.CarRentDBContext))]
     [Migration("20210118204647_InitDB")]
     partial class InitDB
     {

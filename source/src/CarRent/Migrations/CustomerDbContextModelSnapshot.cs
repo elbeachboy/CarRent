@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRent.Migrations
 {
-    [DbContext(typeof(CustomerDbContext))]
+    [DbContext(typeof(CustomerManagement.DbContext.CarRentDBContext))]
     partial class CustomerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

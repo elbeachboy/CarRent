@@ -9,9 +9,9 @@
     {
         List<Customer> GetAll();
         Customer FindById(Guid id);
-        IEnumerable<Customer> FindByName(string name);
+        List<Customer> FindByName(string name);
         void Add(Customer customer);
-        Customer Upsert(Customer customer);
+        void Upsert(Customer customer);
         void Remove(Guid id);
         void Remove(Customer customer);
     }

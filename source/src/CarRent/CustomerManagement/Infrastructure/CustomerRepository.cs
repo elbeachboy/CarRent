@@ -1,46 +1,48 @@
-﻿using System.Configuration;
-using System.Runtime.ConstrainedExecution;
-using CarRent.CustomerManagement.Application;
+﻿using System.Linq;
 using CarRent.CustomerManagement.DbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRent.CustomerManagement.Infrastructure
 {
     using CarRent.CustomerManagement.Domain;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class CustomerRepository : ICustomerRepository
     {
-        public CustomerRepository()
-        {
+        private readonly CarRentDBContext _dbContext;
 
+        public CustomerRepository(CarRentDBContext dbContext)
+        {
+            _dbContext = dbContext;
         }
 
         public Customer FindById(Guid id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Customers.Include(c => c.ZipCodePlace).FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<Customer> FindByName(string name)
+        public List<Customer> FindByName(string name)
         {
-            throw new NotImplementedException();
+            return _dbContext.Customers.Include(c => c.ZipCodePlace).Where(c => c.Name == name).ToList();
         }
 
         public void Add(Customer customer)
         {
-            throw new NotImplementedException();
+            _dbContext.Customers.Add(customer);
+            _dbContext.SaveChanges();
         }
 
-        public Customer Upsert(Customer customer)
+        public void Upsert(Customer customer)
         {
-            throw new NotImplementedException();
+            _dbContext.Customers.Update(customer);
+            _dbContext.SaveChanges();
         }
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            _dbContext.Customers.Remove(_dbContext.Customers.Find(id));
+            _dbContext.SaveChanges();
         }
 
         public void Remove(Customer customer)
@@ -50,7 +52,7 @@ namespace CarRent.CustomerManagement.Infrastructure
 
         public List<Customer> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Customers.Include(c => c.ZipCodePlace).ToList();
         }
     }
 }

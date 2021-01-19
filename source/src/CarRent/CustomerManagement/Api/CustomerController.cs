@@ -1,6 +1,7 @@
 ﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 using System.Security.Cryptography.X509Certificates;
+using AutoMapper;
 using CarRent.CustomerManagement.DbContext;
 using CarRent.CustomerManagement.Domain;
 using Microsoft.EntityFrameworkCore;
@@ -19,81 +20,70 @@ namespace CarRent.CustomerManagement.Api
     public class CustomerController : ControllerBase
     {
 
-        private readonly CustomerDbContext _dbContext;
-        public CustomerController(CustomerDbContext db)
+        private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
-            this._dbContext = db;
+            this._customerService = customerService;
+            this._mapper = mapper;
         }
 
         // GET: api/<CustomerController>
         [HttpGet]
         public List<CustomerDTO> Get()
         {
+           var list = new List<CustomerDTO>();
+           foreach (var customer in _customerService.GetAllCustomers())
+           {
+               var customerDTO  = _mapper.Map<CustomerDTO>(customer);
+               list.Add(customerDTO);
+           }
 
+           return list;
+        }
+
+        // GET api/<CustomerController>
+        [HttpGet("CustomerByName/{name}")]
+        public List<CustomerDTO> Get(string name)
+        {
             var list = new List<CustomerDTO>();
-            //var customers = _dbContext.Customers.Include(x => x.).ToList();
-            //foreach (var c in customers)
-            //{
-            //    var customer = new CustomerDTO();
-            //    customer.Id = c.Id;
-            //    customer.Name = c.Name;
-            //    customer.Surname = c.Surname;
-            //    customer.Street = c.Street;
-            //    var zipCodePlace = new ZipCodePlaceDTO();
-            //    zipCodePlace.Id = c.ZipCodePlace.Id;
-            //    zipCodePlace.Place = c.ZipCodePlace.Place;
-            //    zipCodePlace.ZipCode =  c.ZipCodePlace.ZipCode;
+            foreach (var customer in _customerService.GetCustomerByName(name))
+            {
+                var customerDTO  = _mapper.Map<CustomerDTO>(customer);
+                list.Add(customerDTO);
+            }
 
-
-            //    list.Add(customer);
-            //}
             return list;
         }
 
-
-        // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
+        // GET api/<CustomerController>
+        [HttpGet("CustomerById/{id}")]
         public CustomerDTO Get(Guid id)
         {
-            var c = _dbContext.Customers.Include(x => x.ZipCodePlace).FirstOrDefault();
-            var customer = new CustomerDTO();
-            customer.Id = c.Id;
-            customer.Name = c.Name;
-            customer.Surname = c.Surname;
-            customer.Street = c.Street;
-            var zipCodePlace = new ZipCodePlaceDTO();
-            zipCodePlace.Id = c.ZipCodePlace.Id;
-            zipCodePlace.Place = c.ZipCodePlace.Place;
-            zipCodePlace.ZipCode = c.ZipCodePlace.ZipCode;
-            customer.ZipCodePlaceDto = zipCodePlace;
-            return customer;
+            return _mapper.Map<CustomerDTO>(_customerService.GetCustomerById(id));
         }
 
         // POST api/<CustomerController>
         [HttpPost]
         public void Post([FromBody] CustomerDTO customer)
         {
-            var c = new Customer();
-            c.Id = Guid.NewGuid();
-            c.Name = customer.Name;
-            c.Surname = customer.Surname;
-            c.Street = customer.Street;
-            c.ZipCodePlaceId = customer.ZipCodePlaceId;
-
-            _dbContext.Customers.Add(c);
-            _dbContext.SaveChanges();
+            var c =_mapper.Map<Customer>(customer);
+            _customerService.AddCustomer(c);
         }
 
-        // PUT api/<CustomerController>/5
+        // PUT api/<CustomerController>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] CustomerDTO customer)
+        public void Put(Guid id, [FromBody] CustomerDTO customer)
         {
+            var c =_mapper.Map<Customer>(customer);
+            _customerService.UpdateCustomer(c);
         }
 
-        // DELETE api/<CustomerController>/5
+        // DELETE api/<CustomerController>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            _customerService.DeleteCustomer(id);
         }
     }
 }
