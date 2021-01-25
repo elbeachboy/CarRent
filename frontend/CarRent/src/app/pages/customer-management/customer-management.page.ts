@@ -18,7 +18,7 @@ export class CustomerManagementPage implements OnInit {
   }
 
   livesearch() {    
-    this.results = this.customerManagementService.searchCustomer(this.searchTerm);  
+    this.results = this.customerManagementService.searchCustomersByName(this.searchTerm);  
   }
 
 }

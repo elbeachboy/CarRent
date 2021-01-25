@@ -17,9 +17,9 @@ namespace CarRent.CustomerManagement.Infrastructure
             _dbContext = dbContext;
         }
 
-        public Customer FindById(Guid id)
+        public List<Customer> FindById(Guid id)
         {
-            return _dbContext.Customers.Include(c => c.ZipCodePlace).FirstOrDefault(c => c.Id == id);
+            return _dbContext.Customers.Include(c => c.ZipCodePlace).Where(c => c.Id == id).ToList();
         }
 
         public List<Customer> FindByName(string name)

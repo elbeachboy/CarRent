@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'customer-management',
     pathMatch: 'full'
   },
+  {
+    path: 'customer-management-detail/:id',
+    loadChildren: () => import('./pages/customer-management-detail/customer-management-detail.module').then( m => m.CustomerManagementDetailPageModule)
+  },
 ];
 
 @NgModule({

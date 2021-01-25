@@ -7,12 +7,20 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CustomerManagementService {
-  url = 'https://localhost:44313/api/Customer/CustomerByName';
+  url1 = 'https://localhost:44313/api/Customer/CustomerByName';
+  url2 = 'https://localhost:44313/api/Customer/CustomerById';
   constructor(private http: HttpClient) { }
 
-  searchCustomer(name: string): Observable<any> {  
-    return this.http.get(`${this.url}/${encodeURI(name)}`).pipe(      
+  searchCustomersByName(name: string): Observable<any> {  
+    return this.http.get(`${this.url1}/${encodeURI(name)}`).pipe(      
       map(results => results)  
     );  
   }
+
+  searchCustomerById(id: string): Observable<any> {  
+    return this.http.get(`${this.url2}/${encodeURI(id)}`).pipe(      
+      map(results => results)  
+    );  
+  }
+
 }

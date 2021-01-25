@@ -8,7 +8,7 @@
     public interface ICustomerRepository
     {
         List<Customer> GetAll();
-        Customer FindById(Guid id);
+        List<Customer> FindById(Guid id);
         List<Customer> FindByName(string name);
         void Add(Customer customer);
         void Upsert(Customer customer);

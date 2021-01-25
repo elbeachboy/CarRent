@@ -11,7 +11,7 @@ namespace CarRent.CustomerManagement.Application
     {
         List<Customer> GetAllCustomers();
 
-        Customer GetCustomerById(Guid id);
+        List<Customer> GetCustomerById(Guid id);
 
         List<Customer> GetCustomerByName(string name);
 

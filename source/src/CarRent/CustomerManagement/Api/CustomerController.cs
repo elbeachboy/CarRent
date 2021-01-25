@@ -58,9 +58,16 @@ namespace CarRent.CustomerManagement.Api
 
         // GET api/<CustomerController>
         [HttpGet("CustomerById/{id}")]
-        public CustomerDTO Get(Guid id)
+        public List<CustomerDTO> Get(Guid id)
         {
-            return _mapper.Map<CustomerDTO>(_customerService.GetCustomerById(id));
+            var list = new List<CustomerDTO>();
+            foreach (var customer in _customerService.GetCustomerById(id))
+            {
+                var customerDTO  = _mapper.Map<CustomerDTO>(customer);
+                list.Add(customerDTO);
+            }
+
+            return list;
         }
 
         // POST api/<CustomerController>

@@ -19,7 +19,7 @@ namespace CarRent.CustomerManagement.Application
            return _customerRepository.GetAll();
         }
 
-        public Customer GetCustomerById(Guid id)
+        public List<Customer> GetCustomerById(Guid id)
         {
             return _customerRepository.FindById(id);
         }
