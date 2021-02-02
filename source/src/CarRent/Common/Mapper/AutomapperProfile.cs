@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CarRent.CarManagement.Application;
+using CarRent.CarManagement.Domain;
 using CarRent.CustomerManagement.Application;
 using CarRent.CustomerManagement.Domain;
 
@@ -19,6 +21,12 @@ namespace CarRent.Common.Mapper
                 CreateMap<ZipCodePlace, ZipCodePlaceDTO>();
 
                 CreateMap<CustomerDTO, Customer>();
+
+                CreateMap<Car, CarDTO>().ForMember(dest => dest.CarClassDto,
+                    opt => opt.MapFrom(src => src.CarClass));
+                CreateMap<CarClass, CarClassDTO>();
+
+                CreateMap<CarDTO, Car>();
 
             }  
         }  

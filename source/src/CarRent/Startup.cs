@@ -1,6 +1,9 @@
 
 using System;
 using AutoMapper;
+using CarRent.CarManagement.Application;
+using CarRent.CarManagement.Domain;
+using CarRent.CarManagement.Infrastructure;
 using CarRent.CustomerManagement.DbContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,8 +38,13 @@ namespace CarRent
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarRent", Version = "v1" });
             });
             services.AddDbContextPool<CarRentDBContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddTransient<ICarService, CarService>();
+            services.AddScoped<ICarRepository, CarRepository>();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddCors(o => o.AddPolicy("charppolicy", builder =>  
             {  

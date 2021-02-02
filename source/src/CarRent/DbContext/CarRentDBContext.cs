@@ -1,4 +1,5 @@
 ﻿
+using CarRent.CarManagement.Domain;
 using CarRent.CustomerManagement.Domain;
 using Microsoft.EntityFrameworkCore; 
 
@@ -11,6 +12,9 @@ namespace CarRent.CustomerManagement.DbContext
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ZipCodePlace> ZipCodePlaces { get; set; }
+
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<CarClass> CarClasses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +36,20 @@ namespace CarRent.CustomerManagement.DbContext
             modelBuilder.Entity<Customer>().Property(c => c.Name).HasColumnType("nvarchar(100)").IsRequired();
             modelBuilder.Entity<Customer>().Property(c => c.ZipCodePlaceId).HasColumnType("int").IsRequired();;
 
+            modelBuilder.Entity<Car>().ToTable("car");
+            modelBuilder.Entity<CarClass>().ToTable("carclass");
+
+            modelBuilder.Entity<Car>().HasKey(c => c.Id).HasName("Pk_CarId");  
+            modelBuilder.Entity<CarClass>().HasKey(cc => cc.Id).HasName("PK_CarClassId");
+
+            modelBuilder.Entity<CarClass>().Property(cc => cc.Id).HasColumnType("int").IsRequired(); 
+            modelBuilder.Entity<CarClass>().Property(cc => cc.ClassType).HasColumnType("nvarchar(100)").IsRequired(); 
+            modelBuilder.Entity<CarClass>().Property(cc => cc.PricePerDay).HasColumnType("int").IsRequired();
+
+            modelBuilder.Entity<Car>().Property(c => c.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Car>().Property(c => c.Brand).HasColumnType("nvarchar(100)").IsRequired();
+            modelBuilder.Entity<Car>().Property(c => c.Type).HasColumnType("nvarchar(100)").IsRequired();
+            modelBuilder.Entity<Car>().Property(c => c.CarCLassId).HasColumnType("int").IsRequired();
         }
     }
 }
