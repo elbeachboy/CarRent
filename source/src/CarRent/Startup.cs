@@ -6,6 +6,9 @@ using CarRent.CustomerManagement.Application;
 using CarRent.CustomerManagement.DbContext;
 using CarRent.CustomerManagement.Domain;
 using CarRent.CustomerManagement.Infrastructure;
+using CarRent.ReservationManagement.Application;
+using CarRent.ReservationManagement.Domain;
+using CarRent.ReservationManagement.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +44,9 @@ namespace CarRent
 
             services.AddTransient<ICarService, CarService>();
             services.AddScoped<ICarRepository, CarRepository>();
+
+            services.AddTransient<IReservationService, ReservationService>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddCors(o => o.AddPolicy("charppolicy", builder =>  
