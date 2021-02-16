@@ -43,16 +43,16 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"elbeachboy_CarRent" /o:"elbeachboy" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
               runs-on: ubuntu-latest
-              - uses: actions/checkout@v2
-              - name: Setup .NET
+              -uses: actions/checkout@v2
+              -name: Setup .NET
               uses: actions/setup-dotnet@v1
               with:
               dotnet-version: 5.0.x
-              - name: Restore dependencies
+              -name: Restore dependencies
               run: dotnet restore ./source
-              - name: Build
+              -name: Build
               run: dotnet build --no-restore ./source
-              - name: Test
+              -name: Test
               run: dotnet test --no-build --verbosity normal ./source
               run: dotnet restore ./source
               run: dotnet build --no-restore ./source
