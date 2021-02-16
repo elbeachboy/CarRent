@@ -7,6 +7,8 @@ using CarRent.CarManagement.Application;
 using CarRent.CarManagement.Domain;
 using CarRent.CustomerManagement.Application;
 using CarRent.CustomerManagement.Domain;
+using CarRent.ReservationManagement.Application;
+using CarRent.ReservationManagement.Domain;
 
 namespace CarRent.Common.Mapper
 {
@@ -27,6 +29,11 @@ namespace CarRent.Common.Mapper
                 CreateMap<CarClass, CarClassDTO>();
 
                 CreateMap<CarDTO, Car>();
+
+                CreateMap<Reservation, ReservationDTO>()
+                    .ForMember(dest => dest.CustomerDto, opt => opt.MapFrom(src => src.Customer))
+                    .ForMember(dest => dest.CarDto, opt => opt.MapFrom(src => src.Car));
+                CreateMap<ReservationDTO, Reservation>();
 
             }  
         }  

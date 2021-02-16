@@ -47,7 +47,8 @@ namespace CarRent.CustomerManagement.Infrastructure
 
         public void Remove(Customer customer)
         {
-            throw new NotImplementedException();
+            _dbContext.Customers.Remove(customer);
+            _dbContext.SaveChanges();
         }
 
         public List<Customer> GetAll()

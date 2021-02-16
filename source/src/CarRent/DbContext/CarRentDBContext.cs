@@ -1,6 +1,7 @@
 ﻿
 using CarRent.CarManagement.Domain;
 using CarRent.CustomerManagement.Domain;
+using CarRent.ReservationManagement.Domain;
 using Microsoft.EntityFrameworkCore; 
 
 namespace CarRent.CustomerManagement.DbContext
@@ -15,6 +16,8 @@ namespace CarRent.CustomerManagement.DbContext
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarClass> CarClasses { get; set; }
+
+        public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +53,18 @@ namespace CarRent.CustomerManagement.DbContext
             modelBuilder.Entity<Car>().Property(c => c.Brand).HasColumnType("nvarchar(100)").IsRequired();
             modelBuilder.Entity<Car>().Property(c => c.Type).HasColumnType("nvarchar(100)").IsRequired();
             modelBuilder.Entity<Car>().Property(c => c.CarCLassId).HasColumnType("int").IsRequired();
+
+            modelBuilder.Entity<Reservation>().ToTable("reservation");
+
+            modelBuilder.Entity<Reservation>().HasKey(r => r.Id).HasName("Pk_ReservationId");  
+
+            modelBuilder.Entity<Reservation>().Property(r => r.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Reservation>().Property(r => r.StartDateTime).HasColumnType("datetime2").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.EndDateTime).HasColumnType("datetime2").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.TotalDays).HasColumnType("int").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.IsContract).HasColumnType("bit").HasDefaultValue(false);
+            modelBuilder.Entity<Reservation>().Property(r => r.CustomerId).HasColumnType("char(36)").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.CarId).HasColumnType("char(36)").IsRequired();
         }
     }
 }
