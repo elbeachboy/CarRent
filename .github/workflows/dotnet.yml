@@ -1,11 +1,9 @@
-name: .NET
-
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    
+    types: [opened, synchronize, reopened]
 jobs:
   build:
     name: Build
@@ -44,5 +42,19 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"elbeachboy_CarRent" /o:"elbeachboy" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          <your build command>
+              runs-on: ubuntu-latest
+              - uses: actions/checkout@v2
+              - name: Setup .NET
+              uses: actions/setup-dotnet@v1
+              with:
+              dotnet-version: 5.0.x
+              - name: Restore dependencies
+              run: dotnet restore ./source
+              - name: Build
+              run: dotnet build --no-restore ./source
+              - name: Test
+              run: dotnet test --no-build --verbosity normal ./source
+              run: dotnet restore ./source
+              run: dotnet build --no-restore ./source
+              run: dotnet test --no-build --verbosity normal ./source
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
