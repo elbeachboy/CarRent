@@ -19,12 +19,12 @@ namespace CarRent.ReservationManagement.Infrastructure
 
         public List<Reservation> GetAllReservations()
         {
-            return _dbContext.Reservations.Include(r => r.Car).Include(r => r.Customer).ToList();
+            return _dbContext.Reservations.Include(r => r.Car).Include(r => r.Customer).Include(r=>r.Car.CarClass).Include(r=>r.Customer.ZipCodePlace).ToList();
         }
 
         public List<Reservation> FindById(Guid id)
         {
-            return _dbContext.Reservations.Include(r => r.Car).Include(r => r.Customer).Where(r => r.Id == id).ToList();
+            return _dbContext.Reservations.Include(r => r.Car).Include(r => r.Customer).Include(r=>r.Car.CarClass).Include(r=>r.Customer.ZipCodePlace).Where(r => r.Id == id).ToList();
         }
 
         public void Add(Reservation reservation)

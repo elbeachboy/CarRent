@@ -27,6 +27,7 @@ namespace CarRent.Common.Mapper
                 CreateMap<Car, CarDTO>().ForMember(dest => dest.CarClassDto,
                     opt => opt.MapFrom(src => src.CarClass));
                 CreateMap<CarClass, CarClassDTO>();
+                CreateMap<CarClassDTO, CarClass>();
 
                 CreateMap<CarDTO, Car>();
 
