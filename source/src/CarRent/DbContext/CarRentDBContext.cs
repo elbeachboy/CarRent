@@ -59,8 +59,8 @@ namespace CarRent.CustomerManagement.DbContext
             modelBuilder.Entity<Reservation>().HasKey(r => r.Id).HasName("Pk_ReservationId");  
 
             modelBuilder.Entity<Reservation>().Property(r => r.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Reservation>().Property(r => r.StartDateTime).HasColumnType("datetime2").IsRequired();
-            modelBuilder.Entity<Reservation>().Property(r => r.EndDateTime).HasColumnType("datetime2").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.StartDateTime).HasColumnType("datetime").IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.EndDateTime).HasColumnType("datetime").IsRequired();
             modelBuilder.Entity<Reservation>().Property(r => r.TotalDays).HasColumnType("int").IsRequired();
             modelBuilder.Entity<Reservation>().Property(r => r.IsContract).HasColumnType("bit").HasDefaultValue(false);
             modelBuilder.Entity<Reservation>().Property(r => r.CustomerId).HasColumnType("char(36)").IsRequired();
