@@ -29,4 +29,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReservationManagement\Api\" />
+    <Folder Include="ReservationManagement\Application\" />
+    <Folder Include="ReservationManagement\Domain\" />
+    <Folder Include="ReservationManagement\Infrastructure\" />
+  </ItemGroup>
+
 </Project>

@@ -1,24 +1,21 @@
-
-using System;
 using AutoMapper;
 using CarRent.CarManagement.Application;
 using CarRent.CarManagement.Domain;
 using CarRent.CarManagement.Infrastructure;
+using CarRent.CustomerManagement.Application;
 using CarRent.CustomerManagement.DbContext;
+using CarRent.CustomerManagement.Domain;
+using CarRent.CustomerManagement.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace CarRent
 {
-    using CarRent.CustomerManagement.Application;
-    using CarRent.CustomerManagement.Domain;
-    using CarRent.CustomerManagement.Infrastructure;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.OpenApi.Models;
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
