@@ -19,6 +19,8 @@ namespace CarRent.ReservationManagement.Application
 
         public bool IsContract { get; set; }
 
+        public int TotalCost { get; set; }
+
         public Guid CustomerId { get; set; }
 
         public Guid CarId { get; set; }

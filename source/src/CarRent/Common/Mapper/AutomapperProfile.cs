@@ -33,8 +33,10 @@ namespace CarRent.Common.Mapper
 
                 CreateMap<Reservation, ReservationDTO>()
                     .ForMember(dest => dest.CustomerDto, opt => opt.MapFrom(src => src.Customer))
-                    .ForMember(dest => dest.CarDto, opt => opt.MapFrom(src => src.Car));
+                    .ForMember(dest => dest.CarDto, opt => opt.MapFrom(src => src.Car))
+                    .AfterMap((src,dest)=>dest.TotalCost = src.TotalDays * src.Car.CarClass.PricePerDay);
                 CreateMap<ReservationDTO, Reservation>();
+                
 
             }  
         }  
