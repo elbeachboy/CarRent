@@ -1,3 +1,5 @@
 site_name: CarRent Simon Scherer
 theme:
   name: material
+plugins:
+    - drawio-exporter
